@@ -1,8 +1,7 @@
 #!ipxe
-# This is the entrypoint to load the pxe.to iPXE menu.
-
+####       boot.pxe.to initial loader       ####
+#### see http://pxe.to for more information ####
 set conn_type https
 chain --autofree https://pxe.to/menu.ipxe || echo HTTPS Failure! attempting HTTP...
 set conn_type http
 chain --autofree http://pxe.to/menu.ipxe || echo HTTPS Failure! attempting LOCALBOOT...
-    

@@ -1,0 +1,3038 @@
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set scientificlinux_mirror old-releases.scientificlinux.com
+echo Setting mirror to ${scientificlinux_mirror}
+clear scientificlinux_version
+echo -n Please set enter code name of release: ${} && read scientificlinux_version
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+goto scientificlinux_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${scientificlinux_version}
+set dir ${scientificlinux_base_dir}/dists/${scientificlinux_version}/main/installer-${arch_a}/current/images/netboot/
+
+:scientificlinux_boot_type
+menu ${os} [${scientificlinux_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto scientificlinux
+echo ${cls}
+goto scientificlinux_${type}
+
+:scientificlinux_rescue
+set install_params rescue/enable=true
+goto scientificlinux_boot
+
+:scientificlinux_expert
+set install_params priority=low
+goto scientificlinux_boot
+
+:scientificlinux_preseed
+echo -n Specify preseed URL for ${os} ${scientificlinux_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto scientificlinux_boot
+
+:scientificlinux_install
+:scientificlinux_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${scientificlinux_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${scientificlinux_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:scientificlinux_exit
+clear menu
+exit 0
+item 5.0 ${space} ${os} 5.0 
+item 5.0 ${space} ${os} 5.0 
+item 5.1 ${space} ${os} 5.1 
+item 5.1 ${space} ${os} 5.1 
+item 5.10 ${space} ${os} 5.10 
+item 5.10 ${space} ${os} 5.10 
+item 5.11 ${space} ${os} 5.11 
+item 5.11 ${space} ${os} 5.11 
+item 5.2 ${space} ${os} 5.2 
+item 5.2 ${space} ${os} 5.2 
+item 5.3 ${space} ${os} 5.3 
+item 5.3 ${space} ${os} 5.3 
+item 5.4 ${space} ${os} 5.4 
+item 5.4 ${space} ${os} 5.4 
+item 5.5 ${space} ${os} 5.5 
+item 5.5 ${space} ${os} 5.5 
+item 5.6 ${space} ${os} 5.6 
+item 5.6 ${space} ${os} 5.6 
+item 5.7 ${space} ${os} 5.7 
+item 5.7 ${space} ${os} 5.7 
+item 5.8 ${space} ${os} 5.8 
+item 5.8 ${space} ${os} 5.8 
+item 5.9 ${space} ${os} 5.9 
+item 5.9 ${space} ${os} 5.9 
+item 6.0 ${space} ${os} 6.0 
+item 6.0 ${space} ${os} 6.0 
+item 6.1 ${space} ${os} 6.1 
+item 6.1 ${space} ${os} 6.1 
+item 6.2 ${space} ${os} 6.2 
+item 6.2 ${space} ${os} 6.2 
+item 6.3 ${space} ${os} 6.3 
+item 6.3 ${space} ${os} 6.3 
+item 6.4 ${space} ${os} 6.4 
+item 6.4 ${space} ${os} 6.4 
+item 6.5 ${space} ${os} 6.5 
+item 6.5 ${space} ${os} 6.5 
+item 6.6 ${space} ${os} 6.6 
+item 6.6 ${space} ${os} 6.6 
+item 6.7 ${space} ${os} 6.7 
+item 6.7 ${space} ${os} 6.7 
+item 6.8 ${space} ${os} 6.8 
+item 6.8 ${space} ${os} 6.8 
+item 6.9 ${space} ${os} 6.9 
+item 6.9 ${space} ${os} 6.9 
+item 7.0 ${space} ${os} 7.0 
+item 7.1 ${space} ${os} 7.1 
+item 7.2 ${space} ${os} 7.2 
+item 7.3 ${space} ${os} 7.3 
+item 7.4 ${space} ${os} 7.4 

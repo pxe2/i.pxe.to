@@ -1,0 +1,186 @@
+:older_release
+set older_release true
+set opensuse_mirror old-releases.opensuse.com
+echo Setting mirror to ${opensuse_mirror}
+clear opensuse_version
+echo -n Please set enter code name of release: ${} && read opensuse_version
+set dir ${opensuse_base_dir}/dists/${opensuse_version}/main/installer-${arch_a}/current/images/netboot/
+goto opensuse_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${opensuse_version}
+set dir ${opensuse_base_dir}/dists/${opensuse_version}/main/installer-${arch_a}/current/images/netboot/
+
+:opensuse_boot_type
+menu ${os} [${opensuse_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto opensuse
+echo ${cls}
+goto opensuse_${type}
+
+:opensuse_rescue
+set install_params rescue/enable=true
+goto opensuse_boot
+
+:opensuse_expert
+set install_params priority=low
+goto opensuse_boot
+
+:opensuse_preseed
+echo -n Specify preseed URL for ${os} ${opensuse_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto opensuse_boot
+
+:opensuse_install
+:opensuse_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${opensuse_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${opensuse_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:opensuse_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set opensuse_mirror old-releases.opensuse.com
+echo Setting mirror to ${opensuse_mirror}
+clear opensuse_version
+echo -n Please set enter code name of release: ${} && read opensuse_version
+set dir ${opensuse_base_dir}/dists/${opensuse_version}/main/installer-${arch_a}/current/images/netboot/
+goto opensuse_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${opensuse_version}
+set dir ${opensuse_base_dir}/dists/${opensuse_version}/main/installer-${arch_a}/current/images/netboot/
+
+:opensuse_boot_type
+menu ${os} [${opensuse_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto opensuse
+echo ${cls}
+goto opensuse_${type}
+
+:opensuse_rescue
+set install_params rescue/enable=true
+goto opensuse_boot
+
+:opensuse_expert
+set install_params priority=low
+goto opensuse_boot
+
+:opensuse_preseed
+echo -n Specify preseed URL for ${os} ${opensuse_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto opensuse_boot
+
+:opensuse_install
+:opensuse_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${opensuse_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${opensuse_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:opensuse_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set opensuse_mirror old-releases.opensuse.com
+echo Setting mirror to ${opensuse_mirror}
+clear opensuse_version
+echo -n Please set enter code name of release: ${} && read opensuse_version
+set dir ${opensuse_base_dir}/dists/${opensuse_version}/main/installer-${arch_a}/current/images/netboot/
+goto opensuse_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${opensuse_version}
+set dir ${opensuse_base_dir}/dists/${opensuse_version}/main/installer-${arch_a}/current/images/netboot/
+
+:opensuse_boot_type
+menu ${os} [${opensuse_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto opensuse
+echo ${cls}
+goto opensuse_${type}
+
+:opensuse_rescue
+set install_params rescue/enable=true
+goto opensuse_boot
+
+:opensuse_expert
+set install_params priority=low
+goto opensuse_boot
+
+:opensuse_preseed
+echo -n Specify preseed URL for ${os} ${opensuse_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto opensuse_boot
+
+:opensuse_install
+:opensuse_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${opensuse_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${opensuse_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:opensuse_exit
+clear menu
+exit 0
+item 13.2 ${space} ${os} 13.2 
+item 42.2 ${space} ${os} 42.2 
+item 42.3 ${space} ${os} 42.3 

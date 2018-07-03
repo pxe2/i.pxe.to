@@ -13,7 +13,7 @@ write_files:
     owner: "root"
     content: |
       Automically provisioned from pxe using the following cloud-config url 
-      http://ef5b02050b62.pouliot.net/rancheros/cloud-config.yml/rancheros-1.3.0-amd64.cloud-config.yml
+      http://0f8088955ebe.pouliot.net/rancheros/cloud-config.yml/rancheros-1.3.0-amd64.cloud-config.yml
 
   - path: "/tmp/install-docker-compose.sh"
     permissions: "0777"
@@ -47,7 +47,7 @@ write_files:
   - path: "/exports/README"
     content: |
       Provisioned automically over pxe using the following cloud-config url 
-      http://ef5b02050b62.pouliot.net/rancheros/cloud-config.yml/rancheros-1.3.0-amd64.cloud-config.yml
+      http://0f8088955ebe.pouliot.net/rancheros/cloud-config.yml/rancheros-1.3.0-amd64.cloud-config.yml
 
   - path: "/tmp/install-docker-volume-netshare.sh"
     permissions: "0777"

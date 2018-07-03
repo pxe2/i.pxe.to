@@ -4,9 +4,9 @@
 install
 text
 url --url=http://vault.centos.org/6.1/os/x86_64/ 
-#--proxy=http://ef5b02050b62.pouliot.net:8000
+#--proxy=http://0f8088955ebe.pouliot.net:8000
 # ssl proxy for install
-#url --url=http://vault.centos.org/6.1/os/x86_64/ --proxy=https://ef5b02050b62.pouliot.net:8000 --noverifyssl
+#url --url=http://vault.centos.org/6.1/os/x86_64/ --proxy=https://0f8088955ebe.pouliot.net:8000 --noverifyssl
 lang en_US.UTF-8
 keyboard us
 

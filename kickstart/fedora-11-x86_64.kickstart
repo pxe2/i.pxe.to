@@ -4,9 +4,9 @@
 install
 text
 url --url=http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/11/Fedora/x86_64/os 
-#--proxy=http://ef5b02050b62.pouliot.net:8000
+#--proxy=http://0f8088955ebe.pouliot.net:8000
 # ssl proxy for install
-#url --url=http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/11/Fedora/x86_64/os --proxy=https://ef5b02050b62.pouliot.net:8000 --noverifyssl
+#url --url=http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/11/Fedora/x86_64/os --proxy=https://0f8088955ebe.pouliot.net:8000 --noverifyssl
 lang en_US.UTF-8
 keyboard us
 

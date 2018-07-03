@@ -3,10 +3,10 @@
 #version=DEVEL
 install
 text
-url --url=http://ef5b02050b62.pouliot.net/oraclelinux/mnt/Enterprise-R5-U9-Server-i386-dvd.iso 
-#--proxy=http://ef5b02050b62.pouliot.net:8000
+url --url=http://0f8088955ebe.pouliot.net/oraclelinux/mnt/Enterprise-R5-U9-Server-i386-dvd.iso 
+#--proxy=http://0f8088955ebe.pouliot.net:8000
 # ssl proxy for install
-#url --url=http://ef5b02050b62.pouliot.net/oraclelinux/mnt/Enterprise-R5-U9-Server-i386-dvd.iso --proxy=https://ef5b02050b62.pouliot.net:8000 --noverifyssl
+#url --url=http://0f8088955ebe.pouliot.net/oraclelinux/mnt/Enterprise-R5-U9-Server-i386-dvd.iso --proxy=https://0f8088955ebe.pouliot.net:8000 --noverifyssl
 lang en_US.UTF-8
 keyboard us
 
@@ -39,7 +39,7 @@ logvol swap --name=lv_swap --vgname=vg_system --grow --size=496 --maxsize=4096
 logvol / --fstype=ext4 --name=lv_root --vgname=vg_system --grow --size=1024
 
 bootloader --location=mbr --timeout=5 --append="rhgb quiet"
-repo --name="oraclelinux-5.9-i386"  --baseurl=http://ef5b02050b62.pouliot.net/oraclelinux/mnt/Enterprise-R5-U9-Server-i386-dvd.iso --cost=1000
+repo --name="oraclelinux-5.9-i386"  --baseurl=http://0f8088955ebe.pouliot.net/oraclelinux/mnt/Enterprise-R5-U9-Server-i386-dvd.iso --cost=1000
 # repo --name="oraclelinux-5.9-i386-Updates"  --baseurl=http://public-yum.oracle.com/repo/oracle/OracleLinux/OL5/9/base/i386 --cost=1000
 # repo --name="puppetlabs"  --baseurl=http://yum.puppet.com/el/5/PC1/i386 --cost=1000
 services --enabled network

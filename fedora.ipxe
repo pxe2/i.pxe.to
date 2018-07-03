@@ -1,0 +1,3286 @@
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set fedora_mirror old-releases.fedora.com
+echo Setting mirror to ${fedora_mirror}
+clear fedora_version
+echo -n Please set enter code name of release: ${} && read fedora_version
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+goto fedora_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${fedora_version}
+set dir ${fedora_base_dir}/dists/${fedora_version}/main/installer-${arch_a}/current/images/netboot/
+
+:fedora_boot_type
+menu ${os} [${fedora_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto fedora
+echo ${cls}
+goto fedora_${type}
+
+:fedora_rescue
+set install_params rescue/enable=true
+goto fedora_boot
+
+:fedora_expert
+set install_params priority=low
+goto fedora_boot
+
+:fedora_preseed
+echo -n Specify preseed URL for ${os} ${fedora_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto fedora_boot
+
+:fedora_install
+:fedora_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${fedora_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${fedora_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:fedora_exit
+clear menu
+exit 0
+item 1 ${space} ${os} 1 
+item 10 ${space} ${os} 10 
+item 10 ${space} ${os} 10 
+item 11 ${space} ${os} 11 
+item 11 ${space} ${os} 11 
+item 12 ${space} ${os} 12 
+item 12 ${space} ${os} 12 
+item 13 ${space} ${os} 13 
+item 13 ${space} ${os} 13 
+item 14 ${space} ${os} 14 
+item 14 ${space} ${os} 14 
+item 15 ${space} ${os} 15 
+item 15 ${space} ${os} 15 
+item 16 ${space} ${os} 16 
+item 16 ${space} ${os} 16 
+item 17 ${space} ${os} 17 
+item 17 ${space} ${os} 17 
+item 18 ${space} ${os} 18 
+item 18 ${space} ${os} 18 
+item 19 ${space} ${os} 19 
+item 19 ${space} ${os} 19 
+item 2 ${space} ${os} 2 
+item 2 ${space} ${os} 2 
+item 20 ${space} ${os} 20 
+item 20 ${space} ${os} 20 
+item 21 ${space} ${os} 21 
+item 21 ${space} ${os} 21 
+item 22 ${space} ${os} 22 
+item 22 ${space} ${os} 22 
+item 23 ${space} ${os} 23 
+item 23 ${space} ${os} 23 
+item 24 ${space} ${os} 24 
+item 24 ${space} ${os} 24 
+item 25 ${space} ${os} 25 
+item 25 ${space} ${os} 25 
+item 26 ${space} ${os} 26 
+item 26 ${space} ${os} 26 
+item 27 ${space} ${os} 27 
+item 27 ${space} ${os} 27 
+item 3 ${space} ${os} 3 
+item 3 ${space} ${os} 3 
+item 4 ${space} ${os} 4 
+item 4 ${space} ${os} 4 
+item 5 ${space} ${os} 5 
+item 5 ${space} ${os} 5 
+item 6 ${space} ${os} 6 
+item 6 ${space} ${os} 6 
+item 7 ${space} ${os} 7 
+item 7 ${space} ${os} 7 
+item 8 ${space} ${os} 8 
+item 8 ${space} ${os} 8 
+item 9 ${space} ${os} 9 
+item 9 ${space} ${os} 9 

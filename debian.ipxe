@@ -1,0 +1,620 @@
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set debian_mirror old-releases.debian.com
+echo Setting mirror to ${debian_mirror}
+clear debian_version
+echo -n Please set enter code name of release: ${} && read debian_version
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+goto debian_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${arch_a}/current/images/netboot/
+
+:debian_boot_type
+menu ${os} [${debian_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto debian
+echo ${cls}
+goto debian_${type}
+
+:debian_rescue
+set install_params rescue/enable=true
+goto debian_boot
+
+:debian_expert
+set install_params priority=low
+goto debian_boot
+
+:debian_preseed
+echo -n Specify preseed URL for ${os} ${debian_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto debian_boot
+
+:debian_install
+:debian_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${debian_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:debian_exit
+clear menu
+exit 0
+item 5 ${space} ${os} 5 lenny
+item 5 ${space} ${os} 5 lenny
+item 6 ${space} ${os} 6 squeeze
+item 6 ${space} ${os} 6 squeeze
+item 7 ${space} ${os} 7 wheezy
+item 7 ${space} ${os} 7 wheezy
+item 8 ${space} ${os} 8 jessie
+item 8 ${space} ${os} 8 jessie
+item 9 ${space} ${os} 9 stretch
+item 9 ${space} ${os} 9 stretch

@@ -1,0 +1,124 @@
+:older_release
+set older_release true
+set kali_mirror old-releases.kali.com
+echo Setting mirror to ${kali_mirror}
+clear kali_version
+echo -n Please set enter code name of release: ${} && read kali_version
+set dir ${kali_base_dir}/dists/${kali_version}/main/installer-${arch_a}/current/images/netboot/
+goto kali_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${kali_version}
+set dir ${kali_base_dir}/dists/${kali_version}/main/installer-${arch_a}/current/images/netboot/
+
+:kali_boot_type
+menu ${os} [${kali_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto kali
+echo ${cls}
+goto kali_${type}
+
+:kali_rescue
+set install_params rescue/enable=true
+goto kali_boot
+
+:kali_expert
+set install_params priority=low
+goto kali_boot
+
+:kali_preseed
+echo -n Specify preseed URL for ${os} ${kali_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto kali_boot
+
+:kali_install
+:kali_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${kali_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${kali_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:kali_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set kali_mirror old-releases.kali.com
+echo Setting mirror to ${kali_mirror}
+clear kali_version
+echo -n Please set enter code name of release: ${} && read kali_version
+set dir ${kali_base_dir}/dists/${kali_version}/main/installer-${arch_a}/current/images/netboot/
+goto kali_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${kali_version}
+set dir ${kali_base_dir}/dists/${kali_version}/main/installer-${arch_a}/current/images/netboot/
+
+:kali_boot_type
+menu ${os} [${kali_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto kali
+echo ${cls}
+goto kali_${type}
+
+:kali_rescue
+set install_params rescue/enable=true
+goto kali_boot
+
+:kali_expert
+set install_params priority=low
+goto kali_boot
+
+:kali_preseed
+echo -n Specify preseed URL for ${os} ${kali_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto kali_boot
+
+:kali_install
+:kali_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${kali_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${kali_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:kali_exit
+clear menu
+exit 0
+item current ${space} ${os} current 
+item current ${space} ${os} current 

@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+echo Starting Manual opensuse-13.2-x86_64  Installation for ${hostname}
+set base-url http://ftp5.gwdg.de/pub/opensuse/discontinued/distribution/13.2/repo/oss
+kernel ${base-url}/linux
+initrd ${base-url}/initrd
+boot || 
+# If everything failed, give the user some options
+echo Boot from ${base-url} failed
+prompt --key 0x197e --timeout 2000 Press F12 to investigate || exit
+shell

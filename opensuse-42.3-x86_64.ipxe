@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+echo Starting Manual opensuse-42.3-x86_64  Installation for ${hostname}
+set base-url http://download.opensuse.org/distribution/leap/42.3/repo/oss
+kernel ${base-url}/linux
+initrd ${base-url}/initrd
+boot || 
+# If everything failed, give the user some options
+echo Boot from ${base-url} failed
+prompt --key 0x197e --timeout 2000 Press F12 to investigate || exit
+shell

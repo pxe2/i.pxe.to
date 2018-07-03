@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+echo Starting Manual oraclelinux-4.5-i386  Installation for ${hostname}
+set base-url http://a737b1065522.pouliot.net/oraclelinux/mnt/Enterprise-R4-U5-i386-dvd.iso
+kernel ${base-url}/vmlinuz
+initrd ${base-url}/initrd.img
+boot || 
+# If everything failed, give the user some options
+echo Boot from ${base-url} failed
+prompt --key 0x197e --timeout 2000 Press F12 to investigate || exit
+shell

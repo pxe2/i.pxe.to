@@ -1,0 +1,248 @@
+:older_release
+set older_release true
+set devuan_mirror old-releases.devuan.com
+echo Setting mirror to ${devuan_mirror}
+clear devuan_version
+echo -n Please set enter code name of release: ${} && read devuan_version
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+goto devuan_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${devuan_version}
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+
+:devuan_boot_type
+menu ${os} [${devuan_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto devuan
+echo ${cls}
+goto devuan_${type}
+
+:devuan_rescue
+set install_params rescue/enable=true
+goto devuan_boot
+
+:devuan_expert
+set install_params priority=low
+goto devuan_boot
+
+:devuan_preseed
+echo -n Specify preseed URL for ${os} ${devuan_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto devuan_boot
+
+:devuan_install
+:devuan_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${devuan_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${devuan_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:devuan_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set devuan_mirror old-releases.devuan.com
+echo Setting mirror to ${devuan_mirror}
+clear devuan_version
+echo -n Please set enter code name of release: ${} && read devuan_version
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+goto devuan_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${devuan_version}
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+
+:devuan_boot_type
+menu ${os} [${devuan_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto devuan
+echo ${cls}
+goto devuan_${type}
+
+:devuan_rescue
+set install_params rescue/enable=true
+goto devuan_boot
+
+:devuan_expert
+set install_params priority=low
+goto devuan_boot
+
+:devuan_preseed
+echo -n Specify preseed URL for ${os} ${devuan_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto devuan_boot
+
+:devuan_install
+:devuan_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${devuan_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${devuan_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:devuan_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set devuan_mirror old-releases.devuan.com
+echo Setting mirror to ${devuan_mirror}
+clear devuan_version
+echo -n Please set enter code name of release: ${} && read devuan_version
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+goto devuan_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${devuan_version}
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+
+:devuan_boot_type
+menu ${os} [${devuan_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto devuan
+echo ${cls}
+goto devuan_${type}
+
+:devuan_rescue
+set install_params rescue/enable=true
+goto devuan_boot
+
+:devuan_expert
+set install_params priority=low
+goto devuan_boot
+
+:devuan_preseed
+echo -n Specify preseed URL for ${os} ${devuan_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto devuan_boot
+
+:devuan_install
+:devuan_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${devuan_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${devuan_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:devuan_exit
+clear menu
+exit 0
+:older_release
+set older_release true
+set devuan_mirror old-releases.devuan.com
+echo Setting mirror to ${devuan_mirror}
+clear devuan_version
+echo -n Please set enter code name of release: ${} && read devuan_version
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+goto devuan_boot_type
+
+:mirrorcfg
+set mirrorcfg mirror/suite=${devuan_version}
+set dir ${devuan_base_dir}/dists/${devuan_version}/main/installer-${arch_a}/current/images/netboot/
+
+:devuan_boot_type
+menu ${os} [${devuan_version}] Installer
+item --gap Install types
+item install ${space} Install
+item rescue ${space} Rescue Mode
+item expert ${space} Expert Install
+item preseed ${space} Specify preseed url...
+choose --default ${type} type || goto devuan
+echo ${cls}
+goto devuan_${type}
+
+:devuan_rescue
+set install_params rescue/enable=true
+goto devuan_boot
+
+:devuan_expert
+set install_params priority=low
+goto devuan_boot
+
+:devuan_preseed
+echo -n Specify preseed URL for ${os} ${devuan_version}: && read preseedurl
+set install_params auto=true priority=critical preseed/url=${preseedurl}
+goto devuan_boot
+
+:devuan_install
+:devuan_boot
+set dir ${dir}${menu}-installer/${arch_a}
+imgfree
+kernel http://${devuan_mirror}/${dir}/linux ${install_params} ${netcfg} ${mirrorcfg} ${console} -- quiet ${params} initrd=initrd.gz
+initrd http://${devuan_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
+iseq ${img_sigs_enabled} true && iseq ${older_release} true && goto skip_sigs ||
+iseq ${img_sigs_enabled} true && goto verify_sigs || goto skip_sigs
+:verify_sigs
+echo
+echo Checking signatures...
+imgverify linux ${sigs}${dir}/linux.sig || goto error
+imgverify initrd.gz ${sigs}${dir}/initrd.gz.sig || goto error
+echo Signatures verified!
+echo
+:skip_sigs
+boot
+
+:devuan_exit
+clear menu
+exit 0
+item 1.0 ${space} ${os} 1.0 jessie
+item 1.0 ${space} ${os} 1.0 jessie
+item 2.0 ${space} ${os} 2.0 ascii
+item 2.0 ${space} ${os} 2.0 ascii

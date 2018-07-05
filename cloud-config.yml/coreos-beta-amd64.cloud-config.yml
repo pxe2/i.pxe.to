@@ -1,0 +1,440 @@
+#cloud-config
+
+coreos:
+#  etcd2:
+    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
+#    discovery: "https://discovery.etcd.io/new"
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+#    advertise-client-urls: "http://$private_ipv4:2379,http://$private_ipv4:4001"
+#    initial-advertise-peer-urls: "http://$private_ipv4:2380"
+    # listen on both the official ports and the legacy ports
+    # legacy ports can be omitted if your application doesn't depend on them
+#    listen-client-urls: "http://0.0.0.0:2379,http://0.0.0.0:4001"
+#    listen-peer-urls: "http://$private_ipv4:2380,http://$private_ipv4:7001"
+  fleet:
+    public-ip: $private_ipv4
+  # uncomment for azure.
+  # metadata: region=us-east
+
+#  flannel:
+#    interface: $private_ipv4
+  units:
+#    - name: "etcd2.service"
+#      command: "start"
+
+    - name: "fleet.service"
+      command: "start"
+
+#    - name: "flanneld.service"
+#      command: "start"
+#      drop-ins:
+#      - name: 50-network-config.conf
+#        content: |
+#          [Service]
+#          ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
+    - name: "docker-tcp.socket"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Docker Socket for the API
+        [Socket]
+        ListenStream=2375
+        Service=docker.service
+        BindIPv6Only=both
+        [Install]
+        WantedBy=sockets.target
+
+    - name: "install-docker-compose.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install Docker Compose
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-docker-compose.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-docker-volume-netshare.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install Docker Volume NetShare
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-docker-volume-netshare.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-etcd3.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install etcd3 binaries to /opt
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-etcd3.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-consul.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install consul binaries to /opt/bin
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-consul.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-vault.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install vault binaries to /opt/bin
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-vault.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-calico.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install calicoctl binaries to /opt/bin
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-calico.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-java.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install Java Binaries to /opt
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-java.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-pypy.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Install PyPy Binaries to /opt
+        [Service]
+        Type=oneshot
+        ExecStart=/bin/bash -ex /tmp/install-pypy.sh
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "install-ceph-tools.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Puppet
+        After=docker.service
+        Requires=docker.service
+        [Service]
+        Type=oneshot
+        TimeoutStartSec=0
+        ExecStart=/usr/bin/docker run --rm -v /opt/bin:/opt/bin ceph/install-utils
+        [Install]
+        WantedBy=multi-user.target
+
+    - name: "puppet.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Puppet
+        After=docker.service
+        Requires=docker.service
+        [Service]
+        TimeoutStartSec=0
+        ExecStart=/usr/bin/docker run --rm --privileged --name puppet --hostname %H -v /tmp:/tmp -v /etc:/etc -v /var:/var -v /usr:/usr -v /lib64:/lib64 puppet/puppet-agent agent --verbose --debug --trace --logdest=console --no-daemonize --server= --environment=production --waitforcert=60 --summarize
+        [Install]
+        WantedBy=multi-user.target
+
+    # docker-volumes-netshare
+    # https://ender74.github.io/Sharing-Volumes-With-Docker-NFS/
+    - name: "rpc-statd.service"
+      command: "start"
+      enable: true
+
+    - name: "nfsd.service"
+      command: "start"
+      enable: true
+
+    - name: "docker-volume-netshare.service"
+      command: "start"
+      enable: true
+      content: |
+        [Unit]
+        Description=Enable Docker Volume Netshare Plugin for NFS
+        Requires=docker.service
+        [Service]
+        ExecStart=/opt/bin/docker-volume-netshare nfs
+        [Install]
+        WantedBy=default.target
+
+
+ssh_authorized_keys:
+  - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlZLcFVYcMbYkJ+pwSsTnfOfwmOLZe26J6PBHa/17ZuzBI563BWJfTybjgphVOJwQKAqN+cBfzHZ66PaQm0vqx2Efee1uGq/vd8cmAIyEqmZUnbkxPRQ3G7YLlAwqZalRo2TEglWhEK+O+7hycV3NhCKYpG/2DZwGbW97bKh01R3R0pt9PiSi570w4W4oeUxPioqR/dIJf+g4EnOCnPMvLAT6exGI9hcKCRH3604Qnh2z5rQ0aG4PYS8uCi5MS8AevuWxNg7OKE6e59XxDvruULq+4jerAls+HZVomZ2AQvbcabpqKFEKvVtE12k5uzAWelmZU49NCIHuUgrX5hm0X peter@hackintosh.local"
+  - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKetw3EOkjAc3+QuDbumo1GovGzCZbQ7McDDFPyis779 peter@quartermaster"
+  - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCq1k6++HIrouWWMw/TevD4SaPcMoOHl5rNqGNZ5FghSJb8F7A7DiDhnU8MW8x5pClrQQyY6KTKUI7p1PZptuiNbhf7c2T0O+Rxf0PB0Pt8qZ5RK65rJOXBhPaYt7VBMM18fOrdojoj4kchdRfEYRny4xy3uj3qNwzUSdxRYWDi/q6IGl5wJjVN6O/cvSz/V6hVTi+Hcm+Luch1ZiWlXefuUbIwvBvgazCBx7fPeh4l1DBFtzAec3MUKY73PTcuHfvv/6Nwy4NtRRZAA45Mk6aGDoo1lMeJZUoyKw7ev6XRt9g30s7uqDNDXaieOJlhDCXdOo5cC9Sc4flLFtjk/UsZqjxNl5UALxIw4ZrZ1A/byKZ5gXQ3b6vTR17eu5dhZTClnGIgZZ3R4DNuaNUozlJwoviC8MHe8NIu6H6VseN70MMQX/xdYqDWM45AYo00N3kslndVvoWVGbVlc+0qSisKkJ1Q1ceMmPmsJBvUlcvI5WYFu0wncj1J2sV5uQIzzlGDb/WjthCXN8I+NS29xMi6hDewYrP9Z8+nrDHPpuMCEeQb6tT8fZbytVNRrravetzdqnFFX7qpIkY7UjfHVeDG53l2yknyJJOGr2QPuDwaQvEHmdlb1O2MHTOMFHnNhDQs3Tj8Nvl0BNZmB2N8RcyFny6x3C2+9VhkXAzvn+kitQ== hyper-v_ci@microsoft.com"
+
+hostname: coreos
+
+users:
+  - name: "core"
+#   password_hash: coreos
+    ssh_authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlZLcFVYcMbYkJ+pwSsTnfOfwmOLZe26J6PBHa/17ZuzBI563BWJfTybjgphVOJwQKAqN+cBfzHZ66PaQm0vqx2Efee1uGq/vd8cmAIyEqmZUnbkxPRQ3G7YLlAwqZalRo2TEglWhEK+O+7hycV3NhCKYpG/2DZwGbW97bKh01R3R0pt9PiSi570w4W4oeUxPioqR/dIJf+g4EnOCnPMvLAT6exGI9hcKCRH3604Qnh2z5rQ0aG4PYS8uCi5MS8AevuWxNg7OKE6e59XxDvruULq+4jerAls+HZVomZ2AQvbcabpqKFEKvVtE12k5uzAWelmZU49NCIHuUgrX5hm0X peter@hackintosh.local"
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKetw3EOkjAc3+QuDbumo1GovGzCZbQ7McDDFPyis779 peter@quartermaster"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCq1k6++HIrouWWMw/TevD4SaPcMoOHl5rNqGNZ5FghSJb8F7A7DiDhnU8MW8x5pClrQQyY6KTKUI7p1PZptuiNbhf7c2T0O+Rxf0PB0Pt8qZ5RK65rJOXBhPaYt7VBMM18fOrdojoj4kchdRfEYRny4xy3uj3qNwzUSdxRYWDi/q6IGl5wJjVN6O/cvSz/V6hVTi+Hcm+Luch1ZiWlXefuUbIwvBvgazCBx7fPeh4l1DBFtzAec3MUKY73PTcuHfvv/6Nwy4NtRRZAA45Mk6aGDoo1lMeJZUoyKw7ev6XRt9g30s7uqDNDXaieOJlhDCXdOo5cC9Sc4flLFtjk/UsZqjxNl5UALxIw4ZrZ1A/byKZ5gXQ3b6vTR17eu5dhZTClnGIgZZ3R4DNuaNUozlJwoviC8MHe8NIu6H6VseN70MMQX/xdYqDWM45AYo00N3kslndVvoWVGbVlc+0qSisKkJ1Q1ceMmPmsJBvUlcvI5WYFu0wncj1J2sV5uQIzzlGDb/WjthCXN8I+NS29xMi6hDewYrP9Z8+nrDHPpuMCEeQb6tT8fZbytVNRrravetzdqnFFX7qpIkY7UjfHVeDG53l2yknyJJOGr2QPuDwaQvEHmdlb1O2MHTOMFHnNhDQs3Tj8Nvl0BNZmB2N8RcyFny6x3C2+9VhkXAzvn+kitQ== hyper-v_ci@microsoft.com"
+
+  - name: "jenkins"
+    ssh_authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCq1k6++HIrouWWMw/TevD4SaPcMoOHl5rNqGNZ5FghSJb8F7A7DiDhnU8MW8x5pClrQQyY6KTKUI7p1PZptuiNbhf7c2T0O+Rxf0PB0Pt8qZ5RK65rJOXBhPaYt7VBMM18fOrdojoj4kchdRfEYRny4xy3uj3qNwzUSdxRYWDi/q6IGl5wJjVN6O/cvSz/V6hVTi+Hcm+Luch1ZiWlXefuUbIwvBvgazCBx7fPeh4l1DBFtzAec3MUKY73PTcuHfvv/6Nwy4NtRRZAA45Mk6aGDoo1lMeJZUoyKw7ev6XRt9g30s7uqDNDXaieOJlhDCXdOo5cC9Sc4flLFtjk/UsZqjxNl5UALxIw4ZrZ1A/byKZ5gXQ3b6vTR17eu5dhZTClnGIgZZ3R4DNuaNUozlJwoviC8MHe8NIu6H6VseN70MMQX/xdYqDWM45AYo00N3kslndVvoWVGbVlc+0qSisKkJ1Q1ceMmPmsJBvUlcvI5WYFu0wncj1J2sV5uQIzzlGDb/WjthCXN8I+NS29xMi6hDewYrP9Z8+nrDHPpuMCEeQb6tT8fZbytVNRrravetzdqnFFX7qpIkY7UjfHVeDG53l2yknyJJOGr2QPuDwaQvEHmdlb1O2MHTOMFHnNhDQs3Tj8Nvl0BNZmB2N8RcyFny6x3C2+9VhkXAzvn+kitQ== hyper-v_ci@microsoft.com"
+    groups:
+      - docker
+
+  - name: "git"
+    ssh_authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCq1k6++HIrouWWMw/TevD4SaPcMoOHl5rNqGNZ5FghSJb8F7A7DiDhnU8MW8x5pClrQQyY6KTKUI7p1PZptuiNbhf7c2T0O+Rxf0PB0Pt8qZ5RK65rJOXBhPaYt7VBMM18fOrdojoj4kchdRfEYRny4xy3uj3qNwzUSdxRYWDi/q6IGl5wJjVN6O/cvSz/V6hVTi+Hcm+Luch1ZiWlXefuUbIwvBvgazCBx7fPeh4l1DBFtzAec3MUKY73PTcuHfvv/6Nwy4NtRRZAA45Mk6aGDoo1lMeJZUoyKw7ev6XRt9g30s7uqDNDXaieOJlhDCXdOo5cC9Sc4flLFtjk/UsZqjxNl5UALxIw4ZrZ1A/byKZ5gXQ3b6vTR17eu5dhZTClnGIgZZ3R4DNuaNUozlJwoviC8MHe8NIu6H6VseN70MMQX/xdYqDWM45AYo00N3kslndVvoWVGbVlc+0qSisKkJ1Q1ceMmPmsJBvUlcvI5WYFu0wncj1J2sV5uQIzzlGDb/WjthCXN8I+NS29xMi6hDewYrP9Z8+nrDHPpuMCEeQb6tT8fZbytVNRrravetzdqnFFX7qpIkY7UjfHVeDG53l2yknyJJOGr2QPuDwaQvEHmdlb1O2MHTOMFHnNhDQs3Tj8Nvl0BNZmB2N8RcyFny6x3C2+9VhkXAzvn+kitQ== hyper-v_ci@microsoft.com"
+
+write_files:
+  - path: "/etc/motd"
+    permissions: "0644"
+    owner: "root"
+    content: |
+      Automically provisioned from pxe using the following cloud-config url 
+      http://pxe.to/coreos/cloud-config.yml/coreos-beta-amd64.cloud-config.yml
+
+  - path: "/tmp/install-docker-compose.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-docker-compose.log'
+      exec >> $LOGFILE 2>&1
+      if [ ! -d /opt/bin ];
+      then 
+        mkdir -p /opt/bin
+      fi
+      curl -L `curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.assets[].browser_download_url | select(contains("Linux") and contains("x86_64"))'` > /opt/bin/docker-compose
+      chmod ugo+x /opt/bin/docker-compose
+      ln -s /opt/bin/docker-compose /usr/local/bin/docker-compose
+      /usr/local/bin/docker-compose --version
+
+    # docker-volumes-netshare
+    # https://ender74.github.io/Sharing-Volumes-With-Docker-NFS/
+  - path: "/etc/conf.d/nfs"
+    permissions: '0644'
+    content: |
+      OPTS_RPC_MOUNTD=""
+
+  - path: "/etc/exports"
+    permissions: "0644"
+    content: /exports/ *(rw,async,no_subtree_check,no_root_squash,fsid=0)
+  - path: "/exports/README"
+    content: |
+      Provisioned automically over pxe using the following cloud-config url 
+      http://pxe.to/coreos/cloud-config.yml/coreos-beta-amd64.cloud-config.yml
+
+  - path: "/tmp/install-docker-volume-netshare.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-docker-volume-netshare.log'
+      exec >> $LOGFILE 2>&1
+
+      if [ ! -d /opt/bin ];
+      then 
+        mkdir -p /opt/bin
+      fi
+      wget -nv -O /opt/bin/docker-volume-netshare https://github.com/ContainX/docker-volume-netshare/releases/download/v0.34/docker-volume-netshare_0.34_linux_amd64-bin
+      chmod ugo+x  /opt/bin/docker-volume-netshare
+      ln -s /opt/bin/docker-volume-netshare /usr/local/bin/docker-volume-netshare
+      /usr/local/bin/docker-volume-netshare version
+
+  - path: "/tmp/install-etcd3.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-etd3.log'
+      exec >> $LOGFILE 2>&1
+
+      ETCD3_VERSION='v3.2.9'
+
+      if [ ! -d /opt/bin ];
+      then
+        mkdir -p /opt/bin
+      fi
+      cd /opt
+      wget -nv -O etcd-$ETCD3_VERSION-linux-amd64.tar.gz https://github.com/coreos/etcd/releases/download/$ETCD3_VERSION/etcd-$ETCD3_VERSION-linux-amd64.tar.gz
+      tar -xvzf etcd-$ETCD3_VERSION-linux-amd64.tar.gz
+      mv etcd-$ETCD3_VERSION-linux-amd64 etcd3
+      rm -rf etcd-$ETCD3_VERSION-linux-amd64.tar.gz
+      chmod ugo+x  /opt/etcd3/etcd
+      chmod ugo+x  /opt/etcd3/etcdctl
+      ln -s /opt/etcd3/etcd /usr/local/bin/etcd
+      ln -s /opt/etcd3/etcdctl /usr/local/bin/etcdctl
+      /usr/local/bin/etcd --version
+      /usr/local/bin/etcdctl --version
+
+  - path: "/tmp/install-consul.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-consul.log'
+      exec >> $LOGFILE 2>&1
+
+      CONSUL_VERSION='1.0.1'
+
+      if [ ! -d /opt/bin ];
+      then
+        mkdir -p /opt/bin
+      fi
+      cd /opt/bin
+      wget -nv -O consul_${CONSUL_VERSION}_linux_amd64.zip https://releases.hashicorp.com/consul/$CONSUL_VERSION/consul_${CONSUL_VERSION}_linux_amd64.zip
+      unzip consul_${CONSUL_VERSION}_linux_amd64.zip
+      rm -rf consul_${CONSUL_VERSION}_linux_amd64.zip
+      chmod ugo+x  /opt/bin/consul
+      ln -s /opt/bin/consul /usr/local/bin/consul
+      /usr/local/bin/consul --version
+
+  - path: "/tmp/install-vault.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-vault.log'
+      exec >> $LOGFILE 2>&1
+
+      VAULT_VERSION='0.9.0'
+
+      if [ ! -d /opt/bin ];
+      then
+        mkdir -p /opt/bin
+      fi
+      cd /opt/bin
+      wget -nv -O vault_${VAULT_VERSION}_linux_amd64.zip https://releases.hashicorp.com/vault/$VAULT_VERSION/vault_${VAULT_VERSION}_linux_amd64.zip
+
+      unzip vault_${VAULT_VERSION}_linux_amd64.zip
+      rm -rf vault_${VAULT_VERSION}_linux_amd64.zip
+      chmod ugo+x  /opt/bin/vault
+      ln -s /opt/bin/vault /usr/local/bin/vault
+      /usr/local/bin/vault --version
+
+  - path: "/tmp/install-calico.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-calico.log'
+      exec >> $LOGFILE 2>&1
+
+      CALICO_VERSION='1.6.2'
+
+      if [ ! -d /opt/bin ];
+      then
+        mkdir -p /opt/bin
+      fi
+      cd /opt/bin
+      wget -nv -O calicoctl https://github.com/projectcalico/calicoctl/releases/download/v${CALICO_VERSION}/calicoctl
+      chmod ugo+x  /opt/bin/calicoctl
+      ln -s /opt/bin/calicoctl /usr/local/bin/calicoctl
+      /usr/local/bin/calicoctl --version
+
+  - path: "/tmp/install-java.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-java.log'
+      exec >> $LOGFILE 2>&1
+
+      if [ ! -d /opt/java ];
+      then 
+        mkdir -p /opt/java
+      fi
+      cd /opt/java
+      ## Latest JDK9 version is JDK9.0.1 released on 17th Oct, 2017.
+      BASE_URL_9=http://download.oracle.com/otn-pub/java/jdk/9.0.1+11/jdk-9.0.1_
+      declare -a PLATFORMS=("linux-x64_bin.tar.gz")
+      # declare -a PLATFORMS=("linux-x64_bin.rpm" "linux-x64_bin.tar.gz" "osx-x64_bin.dmg" "windows-x64_bin.exe" "solaris-sparcv9_bin.tar.gz" "doc-all.zip")
+      for platform in "${PLATFORMS[@]}"
+      do
+      # wget -c --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "${BASE_URL_9}${platform}"
+        curl -C - -LR#H "Cookie: oraclelicense=accept-securebackup-cookie" -k "${BASE_URL_9}${platform}" | tar -C /opt/java --strip=1 -zx
+      done
+      chmod -R ugo+x /opt/java
+      ln -s /opt/java/bin/java /usr/local/bin/java
+      ln -s /opt/java/bin/javaws /usr/local/bin/javaws
+      /opt/bin/java -version
+      ssh-keyscan -H github.com > /home/jenkins/.ssh/known_hosts;
+
+  - path: "/tmp/install-pypy.sh"
+    permissions: "0777"
+
+    owner: "core"
+
+
+    content: |
+      #!/usr/bin/env bash
+      LOGFILE='/opt/install-pypy.log'
+      exec >> $LOGFILE 2>&1
+
+      PYPY_VERSION='pypy2-v5.9.0-linux64'
+
+      if [ ! -d /opt/bin ];
+      then
+        mkdir -p /opt/bin
+      fi
+      cd /opt
+      wget -nv https://bitbucket.org/pypy/pypy/downloads/$PYPY_VERSION.tar.bz2 ;
+      tar -xjf $PYPY_VERSION.tar.bz2 ;
+      mv $PYPY_VERSION pypy
+      rm -rf $PYPY_VERSION.tar.bz2
+      chmod -R ugo+x /opt/pypy
+      cd /opt/pypy/bin
+      ln -f -s /lib64/libncurses.so.5.9 libtinfo.so.5
+      wget https://bootstrap.pypa.io/get-pip.py ;
+      /opt/pypy/bin/pypy /opt/pypy/bin/get-pip.py ;
+      ln -f -s /opt/pypy/bin/pypy /usr/local/bin/python
+      ln -f -s /opt/pypy/bin/pip /usr/local/bin/pip
+      ln -f -s /opt/pypy/bin/easy_install /usr/local/bin/easy_install
+      /usr/local/bin/python --version
+      /usr/local/bin/pip --version
+      /usr/local/bin/easy_install --version
+
+

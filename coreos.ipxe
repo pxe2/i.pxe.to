@@ -1,0 +1,43 @@
+#!ipxe
+
+# 01.header.distro.ipxe.erb
+
+# Coreos Operating System
+# 
+
+goto ${menu}
+
+:coreos
+set os Coreos
+clear coreos_version
+menu ${os} - ${arch_a} - Image Sig Checks: [${img_sigs_enabled}]
+item --gap Coreos Releases
+
+
+# 02.distro.ipxe.erb 
+
+item alpha ${space} ${os} alpha 
+# 02.distro.ipxe.erb 
+
+item beta ${space} ${os} beta 
+# 02.distro.ipxe.erb 
+
+item stable ${space} ${os} stable 
+# 03.footer.distro.ipxe.erb
+
+choose menu || goto coreos_exit
+echo ${cls}
+goto ${menu} ||
+iseq ${sigs_enabled} true && goto verify_sigs || goto change_menu
+
+:verify_sigs
+imgverify ${menu}.ipxe ${sigs}${menu}.ipxe.sig || goto error
+goto change_menu
+
+:change_menu
+chain ${menu}.ipxe || goto error
+goto coreos_menu
+
+:coreos_exit
+clear menu
+exit 0

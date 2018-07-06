@@ -1,0 +1,17 @@
+# pxe.to bootloaders generated at Fri Jul  6 19:12:59 UTC 2018
+# iPXE Commit: https://github.com/ipxe/ipxe/commit/e7f67d5a4c6e9f06aa7a9db1b4245f5e16f00bb2
+# Travis-CI Job: https://travis-ci.org/pxe2/pxe.to/builds/
+
+7fe1f4870d2afcf0e30b64bb098b92885e78479a4f8064c5f5fa8a1898b987c6  pxe.to-arm64.efi
+b5244aadf0134aabb17972cde4d3c4d466b3ab8616b59a9b2e831fdeb3c79a80  pxe.to-arm64-experimental.efi
+8004d7f9a28259bf2c9ffb0dd3930299e2be75687199f9529bcc7abcf4647cd9  pxe.to.dsk
+a304043dd65eff260960265b2ed26d1bf3f98120c0f24a15de0afac043896c5c  pxe.to.efi
+25b900ae1a16959cc03014fc47418daa1fc9c626fa021d49f080f68b9b1e8967  pxe.to-efi.iso
+213a58fe0a69baa444566ce8c2b607bcd0ae9a865b3cfd14b28c59758a9a5060  pxe.to-gce.tar.gz
+71afef97dbe4e68062b885134f26bf5d1178e9e0439dc98ebe170ce5a91c1c6e  pxe.to.iso
+582ae42a887fbd38c482295e6a708ca3569f656b2c89f923aea121cd85b65fcf  pxe.to.kpxe
+964e5040c1c9c4eae92a4693acd77488421475312f298c498fd7b32fcb56b4c1  pxe.to.lkrn
+d49c4bfe4c40ddb68a8c9cf4328983939dfbb676893fbc36377630dacd012d5d  pxe.to-packet-arm64.efi
+2cc5dd7fee82fde51af7b664e04b0db71ec3ce0695ff13e927f64fcf3dfd491f  pxe.to-packet.kpxe
+4ed28269408a6b06d2bfb3db8fe2b942e44561fb92989e88800ac28c4dddb330  pxe.to-undionly.kpxe
+ecb2d0de1e6c2558e02a88bf22d7e29b121a399f9446c3278f4cd2478c6e01a8  pxe.to.usb

@@ -1,0 +1,43 @@
+#!ipxe
+
+# 01.header.distro.ipxe.erb
+
+# Opensuse Operating System
+# 
+
+goto ${menu}
+
+:opensuse
+set os Opensuse
+clear opensuse_version
+menu ${os} - ${arch_a} - Image Sig Checks: [${img_sigs_enabled}]
+item --gap Opensuse Releases
+
+
+# 02.distro.ipxe.erb 
+
+item 13.2 ${space} ${os} 13.2 
+# 02.distro.ipxe.erb 
+
+item 42.2 ${space} ${os} 42.2 
+# 02.distro.ipxe.erb 
+
+item 42.3 ${space} ${os} 42.3 
+# 03.footer.distro.ipxe.erb
+
+choose menu || goto opensuse_exit
+echo ${cls}
+goto ${menu} ||
+iseq ${sigs_enabled} true && goto verify_sigs || goto change_menu
+
+:verify_sigs
+imgverify ${menu}.ipxe ${sigs}${menu}.ipxe.sig || goto error
+goto change_menu
+
+:change_menu
+chain ${menu}.ipxe || goto error
+goto opensuse_menu
+
+:opensuse_exit
+clear menu
+exit 0

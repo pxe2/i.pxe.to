@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+echo Starting Manual devuan-2.0-i386  Installation for ${hostname}
+set base-url http://pkgmaster.devuan.org/devuan/dists/ascii
+kernel ${base-url}/linux
+initrd ${base-url}/initrd.gz
+boot || 
+# If everything failed, give the user some options
+echo Boot from ${base-url} failed
+prompt --key 0x197e --timeout 2000 Press F12 to investigate || exit
+shell

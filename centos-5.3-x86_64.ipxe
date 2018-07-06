@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+echo Starting Manual centos-5.3-x86_64  Installation for ${hostname}
+set base-url http://vault.centos.org/5.3/os/x86_64/
+kernel ${base-url}/vmlinuz
+initrd ${base-url}/initrd.img
+boot || 
+# If everything failed, give the user some options
+echo Boot from ${base-url} failed
+prompt --key 0x197e --timeout 2000 Press F12 to investigate || exit
+shell

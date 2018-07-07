@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+echo Starting Manual fedora-7-x86_64  Installation for ${hostname}
+set base-url http://archives.fedoraproject.org/pub/archive/fedora/linux/releases/7/Fedora/x86_64/os
+kernel ${base-url}/vmlinuz
+initrd ${base-url}/initrd.img
+boot || 
+# If everything failed, give the user some options
+echo Boot from ${base-url} failed
+prompt --key 0x197e --timeout 2000 Press F12 to investigate || exit
+shell

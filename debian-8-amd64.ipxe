@@ -1,0 +1,11 @@
+#!ipxe
+dhcp
+echo Starting Manual debian-8-amd64  Installation for ${hostname}
+set base-url http://http.us.debian.org/debian/dists/jessie
+kernel ${base-url}/linux
+initrd ${base-url}/initrd.gz
+boot || 
+# If everything failed, give the user some options
+echo Boot from ${base-url} failed
+prompt --key 0x197e --timeout 2000 Press F12 to investigate || exit
+shell

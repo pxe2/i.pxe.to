@@ -3,14 +3,14 @@
 # Peter Pouliot <peter@pouliot.net>
 #
 
-d-i debian-installer/locale                      select en_US.UTF-8
-d-i localechooser/supported-locales              multiselect en_US.UTF-8
-d-i localechooser/countrylist/North_America      select US
-d-i debian-installer/splash                      boolean false
-d-i console-setup/ask_detect                     boolean false
-d-i keyboard-configuration/layout                select English (US)
-d-i keyboard-configuration/variant               select English (US)
-d-i netcfg/choose_interface select eno3
+d-i debian-installer/locale select en_US.UTF-8
+d-i localechooser/supported-locales multiselect en_US.UTF-8
+d-i localechooser/countrylist/North_America select US
+d-i debian-installer/splash boolean false
+d-i console-setup/ask_detect boolean false
+d-i keyboard-configuration/layout select English (US)
+d-i keyboard-configuration/variant select English (US)
+
 # Setup Local Mirror
 d-i mirror/http/hostname                         string archive.ubuntu.com
 d-i mirror/http/directory                        string /ubuntu
@@ -19,20 +19,19 @@ d-i mirror/http/directory                        string /ubuntu
 
 # Disk Partitioning
 # Use LVM, and wipe out anything that already exists
-d-i partman/choose_partition                     select finish
-d-i partman/confirm                              boolean true
-d-i partman/confirm_nooverwrite                  boolean true
-d-i partman/default_filesystem                   string ext4
-d-i partman-auto/method                          string lvm
-d-i partman-auto-lvm/guided_size                 string max
-d-i partman-lvm/device_remove_lvm                boolean true
-d-i partman-lvm/device_remove_lvm_span           boolean true
-d-i partman-lvm/confirm                          boolean true
-d-i partman-lvm/confirm_nooverwrite              boolean true
-d-i partman-auto-lvm/new_vg_name                 multiselect vg_system vg_drbd
-d-i partman-md/device_remove_md                  boolean true
-d-i partman-md/confirm                           boolean true
-d-i partman-partitioning/confirm_write_new_label boolean true
+
+d-i partman-auto/method string lvm
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-lvm/device_remove_md boolean true
+d-i partman-lvm/device_remove_lvm_span boolean true
+d-i partman-auto/purge_lvm_from_device. boolean true
+d-i partman/default_filesystem string ext4
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+
+#d-i partman-auto/init_automatically_partition select biggest_free
+#d-i  partman-auto/method string regular
+
 d-i partman-auto/expert_recipe string       \
   drbd-cluster ::                           \
     2048 50 -1 ext2                         \
@@ -89,19 +88,6 @@ d-i partman-auto/expert_recipe string       \
         method{ format }                    \
         format{ }                           \
     .                                       \
-    
-# Partitioning
-d-i partman-auto/purge_lvm_from_device boolean true
-d-i partman/default_filesystem string ext4
-d-i partman-auto/init_automatically_partition select biggest_free
-d-i partman-auto/method string lvm
-
-#d-i  partman-auto/method string regular
-d-i partman-lvm/device_remove_lvm boolean true
-d-i partman-lvm/device_remove_md boolean true
-d-i partman-lvm/device_remove_lvm_span boolean true
-d-i partman-lvm/confirm boolean true
-d-i partman-lvm/confirm_nooverwrite boolean true
 
 # Partitioning Confirmation
 d-i partman-partitioning/confirm_write_new_label boolean true

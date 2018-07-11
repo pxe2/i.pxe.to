@@ -10,7 +10,7 @@ d-i debian-installer/splash                      boolean false
 d-i console-setup/ask_detect                     boolean false
 d-i keyboard-configuration/layout                select English (US)
 d-i keyboard-configuration/variant               select English (US)
-
+d-i netcfg/choose_interface select eno3
 # Setup Local Mirror
 d-i mirror/http/hostname                         string archive.ubuntu.com
 d-i mirror/http/directory                        string /ubuntu

@@ -26,11 +26,21 @@ d-i partman-lvm/device_remove_md boolean true
 d-i partman-lvm/device_remove_lvm_span boolean true
 d-i partman-auto/purge_lvm_from_device. boolean true
 d-i partman/default_filesystem string ext4
+
 d-i partman-lvm/confirm boolean true
 d-i partman-lvm/confirm_nooverwrite boolean true
 
-#d-i partman-auto/init_automatically_partition select biggest_free
+# Partitioning Confirmation
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+d-i partman-md/confirm boolean true
+
+
+d-i partman-auto/init_automatically_partition select biggest_free
 #d-i  partman-auto/method string regular
+d-i partman-auto/choose_recipe select expert_recipe
 
 d-i partman-auto/expert_recipe string       \
   drbd-cluster ::                           \
@@ -88,13 +98,6 @@ d-i partman-auto/expert_recipe string       \
         method{ format }                    \
         format{ }                           \
     .                                       \
-
-# Partitioning Confirmation
-d-i partman-partitioning/confirm_write_new_label boolean true
-d-i partman/choose_partition select finish
-d-i partman/confirm boolean true
-d-i partman/confirm_nooverwrite boolean true
-d-i partman-md/confirm boolean true
 
 # Time Setup
 d-i clock-setup/utc                             boolean true

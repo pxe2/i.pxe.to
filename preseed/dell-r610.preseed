@@ -140,7 +140,7 @@ d-i pkgsel/updatedb                             boolean true
 
 # Bootloader Configuration
 d-i grub-installer/skip                         boolean false
-d-i grub-installer/bootdev                      string /dev/sdb
+d-i grub-installer/bootdev                      string /dev/sda
 d-i lilo-installer/skip                         boolean false
 d-i grub-installer/only_debian                  boolean true
 d-i grub-installer/with_other_os                boolean true

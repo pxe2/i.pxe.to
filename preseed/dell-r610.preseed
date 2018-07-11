@@ -34,7 +34,7 @@ d-i partman-md/device_remove_md                  boolean true
 d-i partman-md/confirm                           boolean true
 d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman-auto/expert_recipe string       \
-  drdb_cluster ::                           \
+  drbd-cluster ::                           \
     2048 50 -1 ext2                         \
         $primary{}                          \
         $bootable{}                         \

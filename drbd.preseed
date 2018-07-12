@@ -49,27 +49,34 @@ d-i partman-auto/expert_recipe string       \
         format{ /dev/sda }                  \
         use_filesystem{ }                   \
         filesystem{ ext2 }                  \
+        label{ boot }                       \
         mountpoint{ /boot }                 \
     .                                       \
-    10480 80 -1 ext4                        \
-        $lvmok{ }                           \
-        lv_name{ lv_root }                  \
-        in_vg{ vg_system }                  \
+    -1 50 -1 ext4                        \
+        $primary{ }                         \
         method{ lvm }                       \
-        format{ }                           \
-        use_filesystem{ }                   \
-        filesystem{ ext4 }                  \
-        mountpoint{ / }                     \
+        device{ /dev/sda2 }                 \
+        vg_name{ vg_system }                \
     .                                       \
     2048 60 200% linux-swap                 \
         $lvmok{ }                           \
-        lv_name{ lv_swap }                  \
         in_vg{ vg_system }                  \
+        lv_name{ lv_swap }                  \
         method{ swap }                      \
         format{ }                           \
     .                                       \
+    10480 80 -1 ext4                        \
+        $lvmok{ }                           \
+        in_vg{ vg_system }                  \
+        lv_name{ lv_root }                  \
+        method{ format }                    \
+        format{ }                           \
+        use_filesystem{ }                   \
+        filesystem{ ext4 }                  \
+        label{ root }                       \
+        mountpoint{ / }                     \
+    .                                       \
     2048 50 -1 lvm                          \
-        $defaultignore{ }                   \
         $primary{ }                         \
         method{ lvm }                       \
         device{ /dev/sdb }                  \

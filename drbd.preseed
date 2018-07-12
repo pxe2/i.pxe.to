@@ -62,6 +62,7 @@ d-i partman-auto/expert_recipe string       \
         $lvmok{ }                           \
         lv_name{ lv_root }                  \
         in_vg{ vg_system }                  \
+        device{ /dev/sda }                  \
         method{ format }                    \
         format{ }                           \
         use_filesystem{ }                   \
@@ -72,6 +73,7 @@ d-i partman-auto/expert_recipe string       \
         $lvmok{ }                           \
         lv_name{ lv_swap }                  \
         in_vg{ vg_system }                  \
+        device{ /dev/sda }                  \
         method{ swap }                      \
         format{ }                           \
     .                                       \
@@ -86,6 +88,7 @@ d-i partman-auto/expert_recipe string       \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \
+        device{ /dev/sdb }                  \
         method{ format }                    \
         format{ }                           \
     .                                       \
@@ -93,6 +96,7 @@ d-i partman-auto/expert_recipe string       \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \
+        device{ /dev/sdb }                  \
         method{ format }                    \
         format{ }                           \
     .                                       \

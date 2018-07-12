@@ -36,31 +36,29 @@ d-i partman/choose_partition select finish
 d-i partman/confirm boolean true
 d-i partman/confirm_nooverwrite boolean true
 d-i partman-md/confirm boolean true
-
-
 d-i partman-auto/init_automatically_partition select biggest_free
+
 #d-i  partman-auto/method string regular
 d-i partman-auto/choose_recipe select drbd-cluster
-
 d-i partman-auto/expert_recipe string       \
   drbd-cluster ::                           \
     2048 50 4096 ext2                       \
         $primary{}                          \
         $bootable{}                         \
         method{ format }                    \
-        format{ /dev/sda }                  \
+        format{ /dev/sdb }                  \
         use_filesystem{ }                   \
         filesystem{ ext2 }                  \
         mountpoint{ /boot }                 \
     .                                       \
-    2048 50 -1 lvm                         \
+    2048 50 -1 lvm                          \
         $defaultignore{ }                   \
         $primary{ }                         \
         method{ lvm }                       \
-        device{ /dev/sda }                  \
+        device{ /dev/sdb }                  \
         vg_name{ vg_system }                \
     .                                       \
-    10480 80 -1 ext4                       \
+    10480 80 -1 ext4                        \
         $lvmok{ }                           \
         lv_name{ lv_root }                  \
         in_vg{ vg_system }                  \
@@ -70,28 +68,28 @@ d-i partman-auto/expert_recipe string       \
         filesystem{ ext4 }                  \
         mountpoint{ / }                     \
     .                                       \
-    2048 60 200% linux-swap                \
+    2048 60 200% linux-swap                 \
         $lvmok{ }                           \
         lv_name{ lv_swap }                  \
         in_vg{ vg_system }                  \
         method{ swap }                      \
         format{ }                           \
     .                                       \
-    2048 50 -1 lvm                        \
+    2048 50 -1 lvm                          \
         $defaultignore{ }                   \
         $primary{ }                         \
         method{ lvm }                       \
         device{ /dev/sdc }                  \
         vg_name{ vg_drbd }                  \
     .                                       \
-    20480 100 20480 ext3                   \
+    20480 100 20480 ext3                    \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \
         method{ format }                    \
         format{ }                           \
     .                                       \
-    20480 100 20480 ext3                   \
+    20480 100 20480 ext3                    \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \

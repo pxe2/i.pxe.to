@@ -58,12 +58,6 @@ d-i partman-auto/expert_recipe string       \
         device{ /dev/sda2 }                 \
         vg_name{ vg_system }                \
     .                                       \
-    2048 50 -1 lvm                          \
-        $primary{ }                         \
-        method{ lvm }                       \
-        device{ /dev/sdb }                  \
-        vg_name{ vg_drbd }                  \
-    .                                       \
     100% 60 200% linux-swap                 \
         $lvmok{ }                           \
         in_vg{ vg_system }                  \
@@ -82,20 +76,27 @@ d-i partman-auto/expert_recipe string       \
         label{ root }                       \
         mountpoint{ / }                     \
     .                                       \
-    20480 100 20480 ext3                    \
-        $lvmok{ }                           \
-        lv_name{ lv_etc_libvirt_qemu }      \
-        in_vg{ vg_drbd }                    \
-        method{ format }                    \
-        format{ }                           \
-    .                                       \
-    20480 100 20480 ext3                    \
-        $lvmok{ }                           \
-        lv_name{ lv_etc_libvirt_qemu }      \
-        in_vg{ vg_drbd }                    \
-        method{ format }                    \
-        format{ }                           \
-    .                                       \
+
+#    2048 50 -1 ext4                         \
+#        $primary{ }                         \
+#        method{ lvm }                       \
+#        device{ /dev/sdb }                  \
+#        vg_name{ vg_drbd }                  \
+#    .                                       \
+#    20480 100 20480 ext3                    \
+#        $lvmok{ }                           \
+#        lv_name{ lv_etc_libvirt_qemu }      \
+#        in_vg{ vg_drbd }                    \
+#        method{ format }                    \
+#        format{ }                           \
+#    .                                       \
+#    20480 100 20480 ext3                    \
+#        $lvmok{ }                           \
+#        lv_name{ lv_etc_libvirt_qemu }      \
+#        in_vg{ vg_drbd }                    \
+#        method{ format }                    \
+#        format{ }                           \
+#    .                                       \
 
 # Time Setup
 d-i clock-setup/utc                             boolean true

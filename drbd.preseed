@@ -132,7 +132,7 @@ d-i apt-setup/local0/key string http://apt.puppet.com/pubkey.gpg
 d-i debian-installer/allow_unauthenticated string false
 
 # Packages
-d-i pkgsel/include                              string vim screen git net-tools openssh-server software-properties-common
+d-i pkgsel/include                              string vim wget curl screen git net-tools openssh-server software-properties-common ntp drbd8-utils
 d-i pkgsel/upgrade                              select safe-upgrade
 d-i pkgsel/language-packs                       multiselect
 

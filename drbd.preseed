@@ -58,6 +58,12 @@ d-i partman-auto/expert_recipe string       \
         device{ /dev/sda2 }                 \
         vg_name{ vg_system }                \
     .                                       \
+    2048 50 -1 lvm                          \
+        $primary{ }                         \
+        method{ lvm }                       \
+        device{ /dev/sdb }                  \
+        vg_name{ vg_drbd }                  \
+    .                                       \
     2048 60 200% linux-swap                 \
         $lvmok{ }                           \
         in_vg{ vg_system }                  \
@@ -75,12 +81,6 @@ d-i partman-auto/expert_recipe string       \
         filesystem{ ext4 }                  \
         label{ root }                       \
         mountpoint{ / }                     \
-    .                                       \
-    2048 50 -1 lvm                          \
-        $primary{ }                         \
-        method{ lvm }                       \
-        device{ /dev/sdb }                  \
-        vg_name{ vg_drbd }                  \
     .                                       \
     20480 100 20480 ext3                    \
         $lvmok{ }                           \

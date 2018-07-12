@@ -41,58 +41,60 @@ d-i partman-md/confirm boolean true
 d-i partman-auto/init_automatically_partition select biggest_free
 #d-i  partman-auto/method string regular
 d-i partman-auto/choose_recipe select drbd-cluster
+
 d-i partman-auto/expert_recipe string       \
   drbd-cluster ::                           \
-    2048 50 2048 ext2                       \
-        $primary{ }                         \
-        $bootable{ }                        \
+    2048 50 4096 ext2                       \
+        $primary{}                          \
+        $bootable{}                         \
         method{ format }                    \
-        format{ }                           \
-        device{ /dev/sda }                  \
+        format{ /dev/sda }                  \
         use_filesystem{ }                   \
         filesystem{ ext2 }                  \
         mountpoint{ /boot }                 \
     .                                       \
-    10480 90 -1 ext4                        \
-        $defaultignore{ }                   \ 
-        $lvmok{ }                           \
-        in_vg{ vg_system }                  \
+    2048 50 -1 lvm                         \
+        $defaultignore{ }                   \
+        $primary{ }                         \
+        method{ lvm }                       \
         device{ /dev/sda }                  \
+        vg_name{ vg_system }                \
+    .                                       \
+    10480 80 -1 ext4                       \
+        $lvmok{ }                           \
         lv_name{ lv_root }                  \
+        in_vg{ vg_system }                  \
         method{ format }                    \
         format{ }                           \
         use_filesystem{ }                   \
         filesystem{ ext4 }                  \
         mountpoint{ / }                     \
     .                                       \
-    2048 50 200% linux-swap                \
+    2048 60 200% linux-swap                \
         $lvmok{ }                           \
-        in_vg{ vg_system }                  \
-        device{ /dev/sda }                  \
         lv_name{ lv_swap }                  \
+        in_vg{ vg_system }                  \
         method{ swap }                      \
         format{ }                           \
     .                                       \
     2048 50 -1 lvm                        \
+        $defaultignore{ }                   \
         $primary{ }                         \
-        method{ format }                    \
-        format{ }                           \
-        device{ /dev/sdb }                  \
+        method{ lvm }                       \
+        device{ /dev/sdc }                  \
         vg_name{ vg_drbd }                  \
     .                                       \
-    20480 100 20480 ext4                   \
+    20480 100 20480 ext3                   \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \
-        device{ /dev/sdb }                  \
         method{ format }                    \
         format{ }                           \
     .                                       \
-    20480 100 -1 ext4                      \
+    20480 100 20480 ext3                   \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \
-        device{ /dev/sdb }                  \
         method{ format }                    \
         format{ }                           \
     .                                       \
@@ -130,7 +132,7 @@ d-i apt-setup/local0/key string http://apt.puppet.com/pubkey.gpg
 d-i debian-installer/allow_unauthenticated string false
 
 # Packages
-d-i pkgsel/include                              string vim ntp wget curl screen git net-tools openssh-server software-properties-common drbd8-utils
+d-i pkgsel/include                              string vim screen git net-tools openssh-server software-properties-common
 d-i pkgsel/upgrade                              select safe-upgrade
 d-i pkgsel/language-packs                       multiselect
 

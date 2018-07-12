@@ -46,7 +46,7 @@ d-i partman-auto/expert_recipe string       \
         $primary{}                          \
         $bootable{}                         \
         method{ format }                    \
-        format{ /dev/sdb }                  \
+        format{ /dev/sda }                  \
         use_filesystem{ }                   \
         filesystem{ ext2 }                  \
         mountpoint{ /boot }                 \
@@ -55,7 +55,7 @@ d-i partman-auto/expert_recipe string       \
         $defaultignore{ }                   \
         $primary{ }                         \
         method{ lvm }                       \
-        device{ /dev/sdb }                  \
+        device{ /dev/sda }                  \
         vg_name{ vg_system }                \
     .                                       \
     10480 80 -1 ext4                        \
@@ -79,7 +79,7 @@ d-i partman-auto/expert_recipe string       \
         $defaultignore{ }                   \
         $primary{ }                         \
         method{ lvm }                       \
-        device{ /dev/sdc }                  \
+        device{ /dev/sdb }                  \
         vg_name{ vg_drbd }                  \
     .                                       \
     20480 100 20480 ext3                    \

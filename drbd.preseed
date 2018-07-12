@@ -143,17 +143,15 @@ d-i pkgsel/updatedb                             boolean true
 
 # Bootloader Configuration
 d-i grub-installer/skip                         boolean false
-d-i grub-installer/bootdev                      string /dev/sda
 d-i lilo-installer/skip                         boolean false
 d-i grub-installer/only_debian                  boolean true
 d-i grub-installer/with_other_os                boolean true
+
 d-i finish-install/keep-consoles                boolean false
 d-i finish-install/reboot_in_progress           note
 d-i cdrom-detect/eject                          boolean true
 d-i debian-installer/exit/halt                  boolean false
 d-i debian-installer/exit/poweroff              boolean false
 
-byobu byobu/launch-by-default boolean true
 # Example
-d-i preseed/late_command string chroot /target \
-sh -c "/usr/bin/wget http://i.pxe.to/bin/postinstall -O /tmp/postinstall && /bin/sh -x /tmp/postinstall"
+d-i preseed/late_command string chroot /target  sh -c "/usr/bin/wget http://i.pxe.to/bin/postinstall -O /tmp/postinstall && /bin/sh -x /tmp/postinstall"

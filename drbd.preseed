@@ -64,7 +64,7 @@ d-i partman-auto/expert_recipe string       \
         device{ /dev/sdb }                  \
         vg_name{ vg_drbd }                  \
     .                                       \
-    2048 60 200% linux-swap                 \
+    100% 60 200% linux-swap                 \
         $lvmok{ }                           \
         in_vg{ vg_system }                  \
         lv_name{ lv_swap }                  \

@@ -1,0 +1,58 @@
+#!/bin/sh
+
+# this is a debian/ubuntu specific command
+release=`lsb_release -c | awk '{print $2}'`
+
+echo "### Install Fisrtboot Script to /root ###"
+wget http://i.pxe.to/bin/firstboot -O /root/firstboot
+chmod +x /root/firstboot
+
+use_upstart=`ps -p 1 -o command | awk '{print $1}'|grep -c init`
+use_systemd=`ps -p 1 -o command | awk '{print $1}'|grep -c systemd`
+
+if [ $use_upstart -eq 0 ]
+then
+
+  echo "#### ADDING FIRSTBOOT TO UPSTART CONFIGURATION #####"
+  cat > /etc/init.d/firstboot << EOF
+### BEGIN INIT INFO
+# Provides:        firstboot
+# Required-Start:  $networking
+# Required-Stop:   $networking
+# Default-Start:   2 3 4 5
+# Default-Stop:    0 1 6
+# Short-Description: A script that runs once
+# Description: A script that runs once
+### END INIT INFO
+
+cd /root ; /usr/bin/nohup sh -x /root/firstboot &
+
+EOF
+
+  chmod +x /etc/init.d/firstboot
+  update-rc.d firstboot defaults
+
+else
+  echo "###Not Installing UPSTART Scripts ###"
+fi
+if [ $use_systemd -eq 0 ]
+then
+  echo "#### ADDING FIRSTBOOT TO SYSTEMD CONFIGURATION #####"
+  cat > /etc/systemd/system/firstboot.service << EOF
+[Unit]
+After=network.target
+
+[Service]
+ExecStart=/root/firstboot
+
+[Install]
+WantedBy=multi-user.target
+
+EOF
+  systemctl is-enabled firstboot
+  systemctl enable firstboot
+else
+  echo "###Not Installing SYSTEMD Scripts ###"
+fi
+
+echo "Finished Postinstall Script"

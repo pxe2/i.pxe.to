@@ -43,27 +43,19 @@ d-i partman-auto/choose_recipe select drbd-cluster
 d-i partman-auto/expert_recipe string       \
   drbd-cluster ::                           \
     2048 50 4096 ext2                       \
-        $primary{}                          \
-        $bootable{}                         \
+        $primary{ }                         \
+        $bootable{ }                        \
         method{ format }                    \
         format{ /dev/sda }                  \
         use_filesystem{ }                   \
         filesystem{ ext2 }                  \
         mountpoint{ /boot }                 \
     .                                       \
-    2048 50 -1 lvm                          \
-        $defaultignore{ }                   \
-        $primary{ }                         \
-        method{ lvm }                       \
-        device{ /dev/sda }                  \
-        vg_name{ vg_system }                \
-    .                                       \
     10480 80 -1 ext4                        \
         $lvmok{ }                           \
         lv_name{ lv_root }                  \
         in_vg{ vg_system }                  \
-        device{ /dev/sda }                  \
-        method{ format }                    \
+        method{ lvm }                       \
         format{ }                           \
         use_filesystem{ }                   \
         filesystem{ ext4 }                  \
@@ -73,7 +65,6 @@ d-i partman-auto/expert_recipe string       \
         $lvmok{ }                           \
         lv_name{ lv_swap }                  \
         in_vg{ vg_system }                  \
-        device{ /dev/sda }                  \
         method{ swap }                      \
         format{ }                           \
     .                                       \
@@ -88,7 +79,6 @@ d-i partman-auto/expert_recipe string       \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \
-        device{ /dev/sdb }                  \
         method{ format }                    \
         format{ }                           \
     .                                       \
@@ -96,7 +86,6 @@ d-i partman-auto/expert_recipe string       \
         $lvmok{ }                           \
         lv_name{ lv_etc_libvirt_qemu }      \
         in_vg{ vg_drbd }                    \
-        device{ /dev/sdb }                  \
         method{ format }                    \
         format{ }                           \
     .                                       \
@@ -148,7 +137,7 @@ d-i grub-installer/skip                         boolean false
 d-i lilo-installer/skip                         boolean false
 d-i grub-installer/only_debian                  boolean true
 d-i grub-installer/with_other_os                boolean true
-
+d-i grub-installer/bootdev                      string default
 d-i finish-install/keep-consoles                boolean false
 d-i finish-install/reboot_in_progress           note
 d-i cdrom-detect/eject                          boolean true

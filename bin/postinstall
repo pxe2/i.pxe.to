@@ -3,6 +3,9 @@
 # this is a debian/ubuntu specific command
 release=`lsb_release -c | awk '{print $2}'`
 
+echo "### start serial console ###"
+ln -s /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@ttyS0.service 
+
 echo "### Install Fisrtboot Script to /root ###"
 wget http://i.pxe.to/bin/firstboot -O /root/firstboot
 chmod +x /root/firstboot

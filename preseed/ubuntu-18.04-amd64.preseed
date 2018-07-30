@@ -17,9 +17,8 @@ d-i keyboard-configuration/variant select English (US)
 # Setup Local Mirror
 #d-i mirror/protocol string ftp
 
-d-i mirror/http/hostname string mirrors.kernel.org
+d-i mirror/http/hostname string archive.ubuntu.com
 d-i mirror/http/directory string /ubuntu
-d-i mirror/http/proxy string http://pxe.to:3128/
 # Partitioning
 d-i partman-auto/choose_recipe select atomic
 d-i partman-auto/purge_lvm_from_device boolean true

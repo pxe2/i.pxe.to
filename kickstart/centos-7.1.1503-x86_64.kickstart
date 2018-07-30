@@ -176,3 +176,7 @@ echo "Removing Old DHCP Lease Files"
 rm -rf /var/lib/dhclient/dhclient*.lease
 
 %end
+%post --log /root/centos-serial-console.log
+ln -s /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@ttyS0.service
+%end
+

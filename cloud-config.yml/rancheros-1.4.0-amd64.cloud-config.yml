@@ -14,7 +14,7 @@ write_files:
     owner: "root"
     content: |
       Automically provisioned from pxe using the following cloud-config url 
-      http://pxe.to/rancheros/cloud-config.yml/rancheros-1.4.0-amd64.cloud-config.yml
+      http://i.pxe.to/cloud-config.yml/rancheros-1.4.0-amd64.cloud-config.yml
 
   - path: "/tmp/install-docker-compose.sh"
     permissions: "0777"

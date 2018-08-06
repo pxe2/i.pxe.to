@@ -30,5 +30,5 @@ INSTALL_DISK="/dev/vda"
 if ! fdisk -l $INSTALL_DISK; then
 	INSTALL_DISK="/dev/sda"
 fi
-sudo ros install -c ./rancheros-1.4.0-amd64.cloud-config.yml -d $INSTALL_DISK -f
+sudo ros install -c ./rancheros-1.4.0-amd64.cloud-config.yml -d $INSTALL_DISK -f --append "console=ttyS0,115200n9 serial"
 

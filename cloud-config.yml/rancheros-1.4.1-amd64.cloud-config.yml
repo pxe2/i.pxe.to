@@ -266,5 +266,3 @@ rancher:
     interfaces:
       eth0:
         dhcp: true
-  docker:
-    engine: docker-17.03.2-ce

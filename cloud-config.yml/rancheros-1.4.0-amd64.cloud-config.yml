@@ -261,9 +261,10 @@ rancher:
   state:
     dev: LABEL=RANCHER_STATE
   services_include:
-  console: default
+  console: ubuntu
   network:
     interfaces:
       eth0:
         dhcp: true
-
+  docker:
+    engine: docker-17.03.2-ce

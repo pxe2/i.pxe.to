@@ -10,6 +10,7 @@ d-i keyboard-configuration/variant select English (US)
 d-i console-setup/variant USA
 d-i console-setup/layout USA
 d-i console-setup/layoutcode string us
+d-i keymap select us
 #network configuration
 #d-i netcfg/choose_interface select auto
 #d-i netcfg/get_nameservers string 

@@ -261,7 +261,7 @@ rancher:
   state:
     dev: LABEL=RANCHER_STATE
   services_include:
-  console: ubuntu
+#  console: ubuntu
   network:
     interfaces:
       eth0:

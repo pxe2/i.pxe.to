@@ -7,6 +7,7 @@ d-i debian-installer/splash boolean false
 d-i console-setup/ask_detect boolean false
 d-i keyboard-configuration/layout select English (US)
 d-i keyboard-configuration/variant select English (US)
+d-i keyboard-configuration/xkb-keymap select us
 d-i console-setup/variant USA
 d-i console-setup/layout USA
 d-i console-setup/layoutcode string us

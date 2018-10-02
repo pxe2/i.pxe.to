@@ -1,37 +1,12 @@
 #cloud-config
 
-flatcar:
-#  etcd2:
-    # generate a new token for each unique cluster from https://discovery.etcd.io/new?size=3
-#    discovery: "https://discovery.etcd.io/new"
-    # multi-region and multi-cloud deployments need to use $public_ipv4
-#    advertise-client-urls: "http://$private_ipv4:2379,http://$private_ipv4:4001"
-#    initial-advertise-peer-urls: "http://$private_ipv4:2380"
-    # listen on both the official ports and the legacy ports
-    # legacy ports can be omitted if your application doesn't depend on them
-#    listen-client-urls: "http://0.0.0.0:2379,http://0.0.0.0:4001"
-#    listen-peer-urls: "http://$private_ipv4:2380,http://$private_ipv4:7001"
+coreos:
   fleet:
     public-ip: $private_ipv4
-  # uncomment for azure.
-  # metadata: region=us-east
-
-#  flannel:
-#    interface: $private_ipv4
   units:
-#    - name: "etcd2.service"
-#      command: "start"
-
     - name: "fleet.service"
       command: "start"
 
-#    - name: "flanneld.service"
-#      command: "start"
-#      drop-ins:
-#      - name: 50-network-config.conf
-#        content: |
-#          [Service]
-#          ExecStartPre=/usr/bin/etcdctl set /flatcar.com/network/config '{ "Network": "10.1.0.0/16" }'
     - name: "docker-tcp.socket"
       command: "start"
       content: |
@@ -192,7 +167,7 @@ hostname: flatcar
 
 users:
   - name: "core"
-#   password_hash: flatcar
+#   password_hash: coreos
     ssh_authorized_keys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlZLcFVYcMbYkJ+pwSsTnfOfwmOLZe26J6PBHa/17ZuzBI563BWJfTybjgphVOJwQKAqN+cBfzHZ66PaQm0vqx2Efee1uGq/vd8cmAIyEqmZUnbkxPRQ3G7YLlAwqZalRo2TEglWhEK+O+7hycV3NhCKYpG/2DZwGbW97bKh01R3R0pt9PiSi570w4W4oeUxPioqR/dIJf+g4EnOCnPMvLAT6exGI9hcKCRH3604Qnh2z5rQ0aG4PYS8uCi5MS8AevuWxNg7OKE6e59XxDvruULq+4jerAls+HZVomZ2AQvbcabpqKFEKvVtE12k5uzAWelmZU49NCIHuUgrX5hm0X peter@hackintosh.local"
       - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKetw3EOkjAc3+QuDbumo1GovGzCZbQ7McDDFPyis779 peter@quartermaster"
@@ -215,7 +190,7 @@ write_files:
     owner: "root"
     content: |
       Automically provisioned from pxe using the following cloud-config url 
-      http://pxe.to/flatcar/cloud-config.yml/flatcar-alpha-amd64.cloud-config.yml
+      http://pxe.to/coreos/cloud-config.yml/coreos-alpha-amd64.cloud-config.yml
 
   - path: "/tmp/install-docker-compose.sh"
     permissions: "0777"
@@ -249,7 +224,7 @@ write_files:
   - path: "/exports/README"
     content: |
       Provisioned automically over pxe using the following cloud-config url 
-      http://pxe.to/flatcar/cloud-config.yml/flatcar-alpha-amd64.cloud-config.yml
+      http://pxe.to/coreos/cloud-config.yml/coreos-alpha-amd64.cloud-config.yml
 
   - path: "/tmp/install-docker-volume-netshare.sh"
     permissions: "0777"

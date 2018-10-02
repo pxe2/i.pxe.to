@@ -15,11 +15,11 @@ sudo hostnamectl set-hostname $NEWHOSTNAME
 
 # Download cloud-config
 
-curl -O http://i.pxe.to/cloud-config.yml/coreos-alpha-amd64.cloud-config.yml
-sed -i "/hostname: coreos/c\hostname: $NEWHOSTNAME" ./coreos-alpha-amd64.cloud-config.yml
+curl -O http://i.pxe.to/cloud-config.yml/flatcar-alpha-amd64.cloud-config.yml
+sed -i "/hostname: flatcar/c\hostname: $NEWHOSTNAME" ./flatcar-alpha-amd64.cloud-config.yml
 
 
-#sed -i "/ discovery: \"https://discovery.etcd.io/<token>\"/c\ $DISCOVERY" ./coreos-alpha-amd64.cloud-config.yml
+#sed -i "/ discovery: \"https://discovery.etcd.io/<token>\"/c\ $DISCOVERY" ./flatcar-alpha-amd64.cloud-config.yml
 
 
 # Run install 
@@ -33,7 +33,7 @@ then
   done
  # Zero MBR
   sudo dd if=/dev/zero of=/dev/vda bs=512 count=1
-  sudo coreos-install -d /dev/vda -C alpha -c coreos-alpha-amd64.cloud-config.yml
+  sudo flatcar-install -d /dev/vda -C alpha -c flatcar-alpha-amd64.cloud-config.yml
 fi
 
 
@@ -45,7 +45,7 @@ then
   done
   # Zero MBR
   sudo dd if=/dev/zero of=/dev/sda bs=512 count=1
-  sudo coreos-install -d /dev/sda -C alpha -c coreos-alpha-amd64.cloud-config.yml
+  sudo flatcar-install -d /dev/sda -C alpha -c flatcar-alpha-amd64.cloud-config.yml
 fi
 
 # Reboot 

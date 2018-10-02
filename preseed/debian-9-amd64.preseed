@@ -7,6 +7,9 @@ d-i debian-installer/splash boolean false
 d-i console-setup/ask_detect boolean false
 d-i keyboard-configuration/layout select English (US)
 d-i keyboard-configuration/variant select English (US)
+d-i console-setup/variant USA
+d-i console-setup/layout USA
+d-i console-setup/layoutcode string us
 #network configuration
 #d-i netcfg/choose_interface select auto
 #d-i netcfg/get_nameservers string 
@@ -106,5 +109,5 @@ d-i debian-installer/exit/poweroff boolean false
 
 byobu byobu/launch-by-default boolean true
 # Example 
-#d-i preseed/late_command string chroot /target sh -c "/usr/bin/curl -o /tmp/postinstall http://pxe.to/bin/postinstall && /bin/sh -x /tmp/postinstall"
-d-i preseed/late_command string chroot /target sh -c "/usr/bin/wget http://pxe.to/bin/postinstall -O /tmp/postinstall && /bin/sh -x /tmp/postinstall"
+#d-i preseed/late_command string chroot /target sh -c "/usr/bin/curl -o /tmp/postinstall http://i.pxe.to/bin/postinstall && /bin/sh -x /tmp/postinstall"
+d-i preseed/late_command string chroot /target sh -c "/usr/bin/wget http://i.pxe.to/bin/postinstall -O /tmp/postinstall && /bin/sh -x /tmp/postinstall"

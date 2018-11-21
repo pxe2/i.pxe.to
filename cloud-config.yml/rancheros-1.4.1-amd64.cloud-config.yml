@@ -259,8 +259,9 @@ write_files:
         - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD5iXZeSOzYTSUQCbpCFIr13IjjIEbetuh1bmHeISUsB3UJvVakA90Y7fhdcHOqbqkXgbTbiTahVwM3oGiGHyZx9itUJYrP6uLNJO5aVc1jQNUZaiwWweyYCY1XLBK7CkO0OezIig3m/XXzujvcCFZi5EZr3RLrOHcQA3jass1UbQDYIYt9soY2ixIo5wxkX6BQmHzZRw3rj6qiYWZS/Qa76VmhUAZ3t+m6bNdX8BQISKz/mXiFjeQxwzlD6TyK10au917D6LO7udqv+d1jF/9Q6Kko/u5Bf5UOaPzsS0k0UrNrIa0BOp+5ClAcKFUt3l3vUsCFTVr+u4KK0cQ2rKWsvZNC71Oc/g2/PlA0jcj09RZ/U5pB6X3n9UHjd0Ew8pSLpiRzCExCNfvAC0roXW+BjbElS6+bBoeSjUyhRTcnOx8wGkU3UOIFsZr8S/M8JmJBerxpFmw97/d0+TPVrV57LPbOnp+7KuT80fwxvgVRvrQN4QAPji1ZaLfGbEv6jA8x2s9GEoR96EZHV8v6mHQ6yzReCu/qhdZAOcLYL5on/Y/jCLWonGiM09benpaW5Ws1oXTGjl9roV3E3k0TaORWtmBpX3LvDfxiv+ryQ4t+PVqrjtWtW0dbq6azk2DDtqRbz+byOm10M0KABhqSXGgxWZWpMQ6XPMHU2ERHF/QQQw== peter.karbarz@rakops.com"
 rancher:
   console: alpine
-  docker:
-    engine: docker-17.03.2-ce
+# Used when Pinning Docker versions for RKE
+#  docker:
+#    engine: docker-17.03.2-ce
   state:
     dev: LABEL=RANCHER_STATE
   services_include:
